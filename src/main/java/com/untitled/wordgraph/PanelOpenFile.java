@@ -1,6 +1,8 @@
-//b1
+
 package com.untitled.wordgraph;
+<<<<<<< HEAD
 //2.7change
+
 import java.io.*;
 import java.util.*;
 
