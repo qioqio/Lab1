@@ -32,7 +32,7 @@ import java.awt.GridLayout;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 
-// change PanelApp.java
+// change PanelApp.java in B2
 
 /**
  *
