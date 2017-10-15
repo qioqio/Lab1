@@ -26,7 +26,7 @@ import java.awt.GridLayout;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 
-// change App.java
+// change App.java in B1
 
 /**
  * 整个项目的入口main函数是在这个class中 包含整体的gui框架

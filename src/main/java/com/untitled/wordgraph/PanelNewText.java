@@ -33,6 +33,8 @@ import java.awt.Rectangle;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 
+// change PanelNewText.java in B1
+
 /**
  *
  * PanelNewText 类是用来生成新文本的 这个类继承自PanelApp 布局是采用了GridBagLayout
