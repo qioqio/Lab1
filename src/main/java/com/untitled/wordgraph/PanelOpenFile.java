@@ -32,7 +32,6 @@ import java.awt.Rectangle;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 
-// change PanelOpenFile.java in B1
 
 /**
  *

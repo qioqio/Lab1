@@ -33,7 +33,6 @@ import java.awt.Rectangle;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 
-// change PanelNewText.java in B1
 
 /**
  *

@@ -32,8 +32,6 @@ import java.awt.GridLayout;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 
-// change PanelApp.java in B1
-
 /**
  *
  * PanelApp 类是每一个功能画板的超类，继承JPanel
