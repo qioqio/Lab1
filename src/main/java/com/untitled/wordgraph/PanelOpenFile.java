@@ -32,6 +32,8 @@ import java.awt.Rectangle;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 
+// change PanelOpenFile.java
+
 /**
  *
  * PanelOpenFile 类是用来打开文件的 这个类继承自PanelApp 布局是采用了GridBagLayout
