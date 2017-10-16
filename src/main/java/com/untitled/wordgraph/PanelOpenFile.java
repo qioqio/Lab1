@@ -1,15 +1,13 @@
 
-
-package com.untitled.wordgraph;
-
-﻿//b1
 package com.untitled.wordgraph;
 
 
 
-//2.4change
 
+=======
+package com.untitled.wordgraph;
 
+>>>>>>> ma/1150310618
 import java.io.*;
 import java.util.*;
 
@@ -42,6 +40,13 @@ import java.awt.Rectangle;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 
+
+
+/**
+ *
+ * PanelOpenFile 类是用来打开文件的 这个类继承自PanelApp 布局是采用了GridBagLayout
+ */
+
 class PanelOpenFile extends PanelApp {
     public JButton openFileButton;
     public JButton showPictureButton;
@@ -65,7 +70,8 @@ class PanelOpenFile extends PanelApp {
         gridbag.setConstraints(component, constraints);
         add(component);
     }
-    //c44
+
+
     public PanelOpenFile() {
         setLookAndFeel();
         setLayout(gridbag);
@@ -79,7 +85,7 @@ class PanelOpenFile extends PanelApp {
         showPictureButton.setFont(myFont);
 
         JPanel temp = new JPanel();
-        //b1
+
         temp.setLayout(new GridLayout(1, 2, 100, 100));
         temp.add(openFileButton);
         temp.add(showPictureButton);
@@ -90,7 +96,7 @@ class PanelOpenFile extends PanelApp {
                 JFileChooser fileChooser = new JFileChooser();
                 fileChooser.showOpenDialog(thisLabel);
                 File file = fileChooser.getSelectedFile();
-                //panelPrint = new PanelPrint();
+
                 try {
                     s = file.getAbsolutePath();
                     WordGraph WG = createDirectedGraph(s);
@@ -120,6 +126,11 @@ class PanelOpenFile extends PanelApp {
 
     }
 
+    /**
+     * @param filename 表示文件的名字
+     * @return 返回的WordGraph就是我们通过文件名字找到对应文件生成出来的图
+     */
+
     public static WordGraph createDirectedGraph(String filename) throws IOException {
         String fileContent = readFile(filename);
         initialWords = getWordsList(fileContent);
@@ -130,6 +141,12 @@ class PanelOpenFile extends PanelApp {
         String[] words = content.toLowerCase().replaceAll("[^a-zA-Z ]", " ").replaceAll("\\s+", " ").trim().split(" ");
         return words;
     }
+
+
+    /**
+     * @param filePath 文件的路径
+     * @return 返回String对象是文件之中所有内容
+     */
 
     public static String readFile(String filePath) throws IOException {
         StringBuffer readBuffer = new StringBuffer();

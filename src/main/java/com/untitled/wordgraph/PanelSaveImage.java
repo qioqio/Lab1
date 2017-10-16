@@ -16,11 +16,23 @@ import guru.nidi.graphviz.engine.Format;
 import guru.nidi.graphviz.engine.Graphviz;
 import guru.nidi.graphviz.model.Graph;
 
+
+/**
+ *
+ * PanelSaveImage 类是存储图像到硬盘的 它继承自PanelApp 布局是采用了GridBagLayout
+ */
+
 class PanelSaveImage extends PanelApp {
 
     public JButton button;
 
     GridBagLayout gridbag = new GridBagLayout();
+
+
+    /**
+     *
+     * addComponent 方法定义了将组件如何加入到画板
+     */
 
     public void addComponent(Component component, int gridx, int gridy, int gridwidth, int gridheight, int weightx,
             int weighty, int fill, int anchor) {
@@ -47,6 +59,10 @@ class PanelSaveImage extends PanelApp {
         button = new JButton("选择图像文件(PNG格式)");
         button.setFont(myFont);
         addComponent(button, 2, 3, 0, 0, 2, 1, GridBagConstraints.NONE, GridBagConstraints.CENTER);
+
+        /**
+         * 每当用户点击按钮的时候就运行下面的程序 将图片保存到指定的路径
+         */
 
         final PanelSaveImage thisPanel = this;
         button.addActionListener(new ActionListener() {

@@ -31,6 +31,12 @@ import java.awt.GridLayout;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 
+
+/**
+ *
+ * PanelQueryBridge 类是查询桥接词算法的实现 这个类继承自PanelApp 布局是采用了GridBagLayout
+ */
+
 class PanelQueryBridge extends PanelApp {
     private JTextField text1, text2, text3;
     private JButton button, showPictureButton;
@@ -50,12 +56,18 @@ class PanelQueryBridge extends PanelApp {
         constraints.anchor = anchor;
         gridbag.setConstraints(component, constraints);
         add(component);
-    } //b1
+
+    }
+
 
     public PanelQueryBridge() {
         setLookAndFeel();
 
         setLayout(gridbag);
+
+        /**
+         * 定义需要的按钮，然后使用gridbaglayout布局方式加入到面板之中
+         */
 
         JLabel toLable1 = new JLabel("请输入单词1:");
         toLable1.setFont(myFont);
@@ -87,12 +99,16 @@ class PanelQueryBridge extends PanelApp {
         addComponent(toLable3, 0, 4, 1, 1, 10, 100, GridBagConstraints.NONE, GridBagConstraints.EAST);
         addComponent(text3, 1, 4, 9, 3, 90, 100, GridBagConstraints.HORIZONTAL, GridBagConstraints.WEST);
 
+        /**
+         * 给展示图片的按钮添加监听
+         */
+
         showPictureButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
                     WordGraph WG = getWordGraph(initialWords);
                     String word1 = text1.getText(), word2 = text2.getText();
-    
+
                     if (WG.nodes.containsKey(word1) && WG.nodes.containsKey(word2)) {
                         String[] bridgeWords = queryBridgeWordsList(WG, text1.getText(), text2.getText());
                         WG.nodes.get(word1).color = Color.RED;
@@ -108,6 +124,10 @@ class PanelQueryBridge extends PanelApp {
             }
 
         });
+
+        /**
+         * 给查询桥接词的按钮添加监听，并且定义按钮按下时候的操作
+         */
 
         button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -132,6 +152,15 @@ class PanelQueryBridge extends PanelApp {
             }
         });
     }
+
+
+    /**
+     * @param G 有向图
+     * @param word1 单词1
+     * @param word2 单词2 
+     * @return 桥接词存在表示从单词1直接到桥接词和桥接词直接到单词2的边同时存在，返回的字符是一句话
+     *         表达了桥接词是不是存在的情况，和老师要求的语法完全符合
+     */
 
     public static String queryBridgeWords(WordGraph G, String word1, String word2) {
         if (!G.nodes.containsKey(word1) && !G.nodes.containsKey(word2)) {

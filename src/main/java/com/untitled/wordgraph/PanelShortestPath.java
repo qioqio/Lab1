@@ -32,6 +32,12 @@ import java.awt.GridLayout;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 
+
+/**
+ *
+ * 最短路求解模块
+ */
+
 public class PanelShortestPath extends PanelApp {
     private JTextField text1, text2;
     private JTextArea text3;
@@ -40,6 +46,11 @@ public class PanelShortestPath extends PanelApp {
     private WordGraph WG;
     private int currentKth;
     private String srcWord, destWord;
+
+
+    /*
+     * 向该JPanel添加组件
+     */
 
     public void addComponent(Component component, int gridx, int gridy, int gridwidth, int gridheight, int weightx,
             int weighty, int fill, int anchor) {
@@ -56,7 +67,7 @@ public class PanelShortestPath extends PanelApp {
         gridbag.setConstraints(component, constraints);
         add(component);
 
-        //b1
+
 
     }
 
@@ -115,6 +126,11 @@ public class PanelShortestPath extends PanelApp {
             }
         });
 
+
+        /*
+         * 定义“计算最短路”按钮的时间监听
+         */
+
         button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 srcWord = text1.getText();
@@ -131,20 +147,35 @@ public class PanelShortestPath extends PanelApp {
                 }
             }
         });
-        
+
+
+        /*
+         * 定义“切换终点”按钮的事件监听
+         */
+
         changeEndButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 WG = getWordGraph(initialWords);
                 boolean flag = false, flag2 = false;
                 Iterator<WordNode> wnIterator = WG.nodes.values().iterator();
                 Iterator<WordNode> firstNode = WG.nodes.values().iterator();
-                
+   
                 while (wnIterator.hasNext() && ((WordNode)wnIterator.next()).text.equals(destWord) == false);
                 
                 if (wnIterator.hasNext()) {
                     destWord = ((WordNode)wnIterator.next()).text;
                 } else {
                     destWord = ((WordNode)firstNode.next()).text;
+
+
+                while (wnIterator.hasNext() && ((WordNode) wnIterator.next()).text.equals(destWord) == false)
+                    ;
+
+                if (wnIterator.hasNext()) {
+                    destWord = ((WordNode) wnIterator.next()).text;
+                } else {
+                    destWord = ((WordNode) firstNode.next()).text;
+
                 }
                 System.out.println(destWord);
                 text1.setText(srcWord);
@@ -158,6 +189,12 @@ public class PanelShortestPath extends PanelApp {
                 }
             }
         });
+
+        
+        /*
+         * 定义切换最短路按钮的事件监听
+         */
+
         changeShortestButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 currentKth = currentKth + 1;
@@ -168,6 +205,12 @@ public class PanelShortestPath extends PanelApp {
             }
         });
     }
+
+
+    /**
+     * @parm 传入有向图G，单词word1和单词word2
+     * @return word1在有向图G中到word2的最短路上的节点组成的文本
+     */
 
     public String calcShortestPath(WordGraph G, String word1, String word2) {
         if (!G.nodes.containsKey(word1) && !G.nodes.containsKey(word2)) {
@@ -185,6 +228,7 @@ public class PanelShortestPath extends PanelApp {
             destWord = word2;
             currentKth = 1;
             ArrayList<String> pathWords = getKthShortestPath(G, word1, word2, 1);
+
             return String.format("\"%s\" 到 \"%s\" 有 %d 条最短路，其长度为%d。其中字典序第%d小的最短路为：\n%s\n", 
                     word1, word2, numberPaths, G.nodes.get(word2).distance, currentKth, String.join("->", pathWords));
         }
@@ -197,18 +241,39 @@ public class PanelShortestPath extends PanelApp {
             return "No \"" + srcWord + "\" in the graph!";
         } else if (!WG.nodes.containsKey(destWord)) {
             return "No \"" + destWord+ "\" in the graph!";
+
+            return String.format("\"%s\" 到 \"%s\" 有 %d 条最短路，其长度为%d。其中字典序第%d小的最短路为：\n%s\n", word1, word2, numberPaths,
+                    G.nodes.get(word2).distance, currentKth, String.join("->", pathWords));
+        }
+    }
+
+    /**
+     * @param G 有向图
+     * @param word1 单词1
+     * @param word2 单词2
+     * @param k 字典序排名
+     * @return word1在有向图G中到word2的所有最短路中，字典序第k小的最短路的查询结果
+     */
+    static String printKthShortestPath(WordGraph WG, String srcWord, String destWord, int k) {
+        if (!WG.nodes.containsKey(srcWord) && !WG.nodes.containsKey(destWord)) {
+            return "No \"" + srcWord + "\" and \"" + destWord + "\" in the graph!";
+        } else if (!WG.nodes.containsKey(srcWord)) {
+            return "No \"" + srcWord + "\" in the graph!";
+        } else if (!WG.nodes.containsKey(destWord)) {
+            return "No \"" + destWord + "\" in the graph!";
+
         } else {
             try {
                 int dist = dijkstra(WG, srcWord, destWord);
                 if (dist == Integer.MAX_VALUE) {
                     return "No paths from \"" + srcWord + "\" to \"" + destWord + "\" in the graph!";
                 }
-                
+
                 if (k > WG.nodes.get(srcWord).countPaths)
                     k = WG.nodes.get(srcWord).countPaths;
                 System.out.printf("%d %d", dist, k);
                 ArrayList<String> words = getKthShortestPath(WG, srcWord, destWord, k);
-                
+
                 int numberPaths = WG.nodes.get(srcWord).countPaths;
                 for (int i = 0; i + 1 < words.size(); i++) {
                     WG.nodes.get(words.get(i)).edges.get(words.get(i + 1)).color = Color.GREEN;
@@ -216,20 +281,29 @@ public class PanelShortestPath extends PanelApp {
                 }
                 WG.nodes.get(srcWord).color = Color.RED;
                 WG.nodes.get(destWord).color = Color.BLUE;
-                
+
                 if (panelPrint.frame.isVisible()) {
                     Graph G = getGraph(WG);
                     panelPrint.showDirectedGraph(G);
                 }
-                return String.format("\"%s\" 到 \"%s\" 有 %d 条最短路，其长度为%d。其中字典序第%d小的最短路为：\n%s\n", 
-                        srcWord, destWord, numberPaths, dist, k, String.join("->", words));
+
+                return String.format("\"%s\" 到 \"%s\" 有 %d 条最短路，其长度为%d。其中字典序第%d小的最短路为：\n%s\n", srcWord, destWord,
+                        numberPaths, dist, k, String.join("->", words));
+
             } catch (NullPointerException npe) {
                 JOptionPane.showMessageDialog(null, "请输入文本文件", "错误", JOptionPane.ERROR_MESSAGE);
             }
             return "";
         }
     }
-    
+
+
+    /**
+     * @param u 当前节点
+     * @param dest 终点
+     * @return 从u出发，到dest的不同的最短路的数目
+     */
+
     public static int countShortestPaths(WordNode u, WordNode dest) {
         if (u.visited)
             return u.countPaths;
@@ -244,6 +318,15 @@ public class PanelShortestPath extends PanelApp {
         }
         return u.countPaths;
     }
+
+
+    /**
+     * @param G 有向图
+     * @param word1 单词1
+     * @param word2 单词2
+     * @param k 字典序排名
+     * @return 从u出发，到dest的不同的最短路的数目
+     */
 
     public static ArrayList<String> getKthShortestPath(WordGraph G, String word1, String word2, int k) {
         WordNode currentNode = G.nodes.get(word1);
@@ -260,9 +343,17 @@ public class PanelShortestPath extends PanelApp {
             }
         }
         pathWords.add(word2);
-        //Collections.reverse(pathWords);
+
+        // Collections.reverse(pathWords);
         return pathWords;
     }
+    
+    /**
+     * @param G 有向图
+     * @param word1 单词1
+     * @param word2 单词2
+     * @return word1 到 word2 的最短路的数目
+     */
     public static int dijkstra(WordGraph G, String word1, String word2) {
         for (HashMap.Entry<String, WordNode> entryNode : G.nodes.entrySet()) {
             WordNode wordNode = entryNode.getValue();
@@ -304,7 +395,7 @@ public class PanelShortestPath extends PanelApp {
         WordNode currentNode = G.nodes.get(word2);
         if (currentNode.distance == Integer.MAX_VALUE)
             return Integer.MAX_VALUE;
-        
+
         for (Entry<String, WordNode> entryNode : G.nodes.entrySet()) {
             WordNode u = entryNode.getValue();
             u.visited = false;

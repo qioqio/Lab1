@@ -1,10 +1,6 @@
 
 package com.untitled.wordgraph;
 
-//2.4change
-
-
-
 import java.io.*;
 import java.util.*;
 
@@ -38,6 +34,13 @@ import java.awt.Rectangle;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 
+
+
+/**
+ *
+ * PanelNewText 类是用来生成新文本的 这个类继承自PanelApp 布局是采用了GridBagLayout
+ */
+
 public class PanelNewText extends PanelApp {
     private JTextArea inputTextArea, outputTextArea;
     private JButton button;
@@ -50,10 +53,8 @@ public class PanelNewText extends PanelApp {
         inputTextArea.setFont(myFont);
 
         outputTextArea = new JTextArea("输出文本", 10, 20);
-        
-        
-       // "test"
-        
+
+
         outputTextArea.setFont(myFont);
         button = new JButton("生成新文本");
         button.setFont(myFont);
@@ -72,6 +73,14 @@ public class PanelNewText extends PanelApp {
             }
         });
     }
+
+
+    /**
+     * @param G 有向图
+     * @param inputText 得到的文本
+     * @return 根据bridge word生成新文本
+     *         我们将得到的文本处理之后，然后查询每两个相邻单词的桥接词，然后从桥接词列表之中随机选择一个，生成新文本
+     */
 
     private static String generateNewText(WordGraph G, String inputText) {
         String[] words = inputText.replaceAll("[^a-zA-Z ]", " ").replaceAll("\\s+", " ").trim().split(" ");

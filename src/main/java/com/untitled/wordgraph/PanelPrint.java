@@ -21,6 +21,11 @@ import guru.nidi.graphviz.engine.Format;
 import guru.nidi.graphviz.engine.Graphviz;
 import guru.nidi.graphviz.model.Graph;
 
+/**
+ *
+ * PanelPrint 类是打印图像用的
+ */
+
 public class PanelPrint extends JPanel {
     public JLabel image;
     public JFrame frame = new JFrame("PICTURE");
@@ -47,8 +52,11 @@ public class PanelPrint extends JPanel {
 
         image = new JLabel();
 
-        //BufferedImage bufferedImage = Graphviz.fromGraph(G).render(Format.PNG).toImage();
-        //image.setIcon(new ImageIcon(bufferedImage));
+
+        // BufferedImage bufferedImage =
+        // Graphviz.fromGraph(G).render(Format.PNG).toImage();
+        // image.setIcon(new ImageIcon(bufferedImage));
+
         image.setHorizontalAlignment(SwingConstants.CENTER);
         image.setVerticalAlignment(SwingConstants.CENTER);
         JScrollPane temp = new JScrollPane(image);
@@ -57,6 +65,11 @@ public class PanelPrint extends JPanel {
         frame.repaint();
 
     }
+
+
+    /*
+     * 传入G，调用graphviz-java库渲染图像并显示在窗口中
+     */
 
     public void showDirectedGraph(Graph G) {
 

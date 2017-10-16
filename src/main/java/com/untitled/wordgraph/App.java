@@ -1,8 +1,5 @@
 
-﻿package com.untitled.wordgraph;
-
-
-//2.4change
+package com.untitled.wordgraph;
 
 
 import java.io.*;
@@ -30,21 +27,24 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
+
+
 /**
- * 整个项目的入口main函数是在这个class中
- * 包含整体的gui框架
-*@author 马玉坤
-*@author 张宁 
+ * 整个项目的入口main函数是在这个class中 包含整体的gui框架
+ * 
+ * @author 马玉坤
+ * @author 张宁
  */
 public class App {
+    /**
+     *
+     * showDirectedGraph 函数能够将我们的图片存储到硬盘之中
+     * 
+     * @param WordGraph 是我们写的一个类，包含了一个图的全部信息
+     * @return void
+     * @throws IOException
+     */
 
-		/**
- *
- *showDirectedGraph 函数能够将我们的图片存储到硬盘之中
- * @param WordGraph 是我们写的一个类，包含了一个图的全部信息
- * @return   void
- * @throws    IOException
- */
     public static void showDirectedGraph(WordGraph G) throws IOException {
         Graph Gt = graph("example");
         for (HashMap.Entry<String, WordNode> entryNode : G.nodes.entrySet()) {
@@ -63,11 +63,15 @@ public class App {
 
         Graphviz.fromGraph(Gt).width(900).height(900).render(Format.PNG).toFile(new File("resources/test.png"));
     }
-	/**
- *
- *setLookAndFeel 这个方法定义了gui的风格是windows风格
- * @return   void
- */
+
+
+    /**
+     *
+     * setLookAndFeel 这个方法定义了gui的风格是windows风格
+     * 
+     * @return void
+     */
+
     public static void setLookAndFeel() {
         try {
             // UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
@@ -78,11 +82,14 @@ public class App {
         }
     }
 
-	/**
- *
- *main函数生成了frame框架，将各个部分加入到框架之中
- * @throws    IOException
- */
+
+    /**
+     *
+     * main函数生成了frame框架，将各个部分加入到框架之中
+     * 
+     * @throws IOException
+     */
+
     public static void main(String[] args) throws IOException {
         Font myFont = new Font("Microsoft YaHei", Font.PLAIN, 15);
         setLookAndFeel();

@@ -32,6 +32,14 @@ import java.awt.GridLayout;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 
+
+/**
+ *
+ * PanelRandomAccess 类是随机游走算法的实现
+ * 当用户点击“开始/重新开始”按钮的时候，程序随机的从图中选择一个节点，然后每当用户点击“下一步”的时候 程序就以此为起点沿出边进行随机遍历，记录经
+ * 过的所有节点和边，直到出现第一条重复的边 为止，或者进入的某个节点不存在出边为止。 这个类继承自PanelApp 布局是采用了GridBagLayout
+ */
+
 public class PanelRandomAccess extends PanelApp {
     private JTextArea outputTextArea;
     private JButton restart, nextStep, showPictures;
@@ -54,13 +62,21 @@ public class PanelRandomAccess extends PanelApp {
         constraints.anchor = anchor;
         gridbag.setConstraints(component, constraints);
         add(component);
-        
-        // "test"
 
     }
 
+    /**
+     * @return 随机选择到的与当前节点连接的下一个WordNode对象
+     */
     private WordNode getNextNode() {
+        /**
+         * 由于HashMap对象不支持随机访问，我们通过HashMap生成一个Object数组， 再生成一个随机数，来对节点进行随机访问，找到当前节点的下一个节点
+         */
         Object[] edges = currentNode.edges.values().toArray();
+        /**
+         * flag表示当前节点是不是还存在没有走过的边
+         */
+
         boolean flag = false;
         for (int i = 0; i < edges.length; i++) {
             if (!((WordEdge) edges[i]).visited)
@@ -76,6 +92,11 @@ public class PanelRandomAccess extends PanelApp {
         ((WordEdge) edges[i]).color = Color.BLUE;
         return ((WordEdge) edges[i]).to;
     }
+
+
+    /**
+     * @return 随机选择一个WordNode对象作为初始的节点
+     */
 
     private WordNode getFirstNode() {
         Object[] nodes = (Object[]) WG.nodes.values().toArray();
@@ -157,7 +178,9 @@ public class PanelRandomAccess extends PanelApp {
                 if (panelPrint.frame.isVisible()) {
                     Graph G = getGraph(WG);
                     panelPrint.showDirectedGraph(G);
-                } 
+
+                }
+
             }
         });
 

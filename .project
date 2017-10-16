@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> ma/1150310618
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
 	<name>wordgraph</name>
@@ -22,6 +25,7 @@
 		<nature>org.eclipse.m2e.core.maven2Nature</nature>
 	</natures>
 </projectDescription>
+<<<<<<< HEAD
 =======
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
@@ -55,3 +59,5 @@
 	</natures>
 </projectDescription>
 >>>>>>> 6f1deaf5597737c63eed7da3ae7bb7c2f5ab745c
+=======
+>>>>>>> ma/1150310618
